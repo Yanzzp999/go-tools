@@ -18,7 +18,7 @@ var (
 var hashCmd = &cobra.Command{
 	Use:   "hash",
 	Short: "计算文件或字符串的哈希值",
-	Long:  `支持 MD5、SHA1、SHA256 哈希算法计算文件或字符串的哈希值`,
+	Long:  `支持 MD5、SHA1、SHA256、BLAKE3、xxhash 哈希算法计算文件或字符串的哈希值`,
 	Run: func(cmd *cobra.Command, args []string) {
 		var result string
 		var err error
@@ -32,9 +32,13 @@ var hashCmd = &cobra.Command{
 			ht = utils.SHA1
 		case "sha256":
 			ht = utils.SHA256
+		case "blake3":
+			ht = utils.BLAKE3
+		case "xxhash":
+			ht = utils.XXHASH
 		default:
 			fmt.Printf("不支持的哈希类型: %s\n", hashType)
-			fmt.Println("支持的类型: md5, sha1, sha256")
+			fmt.Println("支持的类型: md5, sha1, sha256, blake3, xxhash")
 			return
 		}
 
@@ -68,7 +72,7 @@ var hashCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(hashCmd)
 
-	hashCmd.Flags().StringVarP(&hashType, "type", "t", "md5", "哈希类型 (md5, sha1, sha256)")
+	hashCmd.Flags().StringVarP(&hashType, "type", "t", "md5", "哈希类型 (md5, sha1, sha256, blake3, xxhash)")
 	hashCmd.Flags().StringVarP(&hashFile, "file", "f", "", "要计算哈希的文件路径")
 	hashCmd.Flags().StringVarP(&hashString, "string", "s", "", "要计算哈希的字符串")
 }

@@ -14,7 +14,7 @@ var versionCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("go-tools v1.0.0")
 		fmt.Println("构建时间: 2025-07-18")
-		fmt.Println("Go版本: go1.21")
+		fmt.Println("Go版本: go1.24.5")
 	},
 }
 
